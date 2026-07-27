@@ -350,6 +350,16 @@ export default function ShopPage() {
             </p>
           </div>
         </div>
+        <div className="border-t border-white/10">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 text-xs text-emerald-50/50">
+            <span>
+              © {new Date().getFullYear()} {BUSINESS_NAME}
+            </span>
+            <a href="/admin" className="underline-offset-2 hover:text-white hover:underline">
+              Owner login
+            </a>
+          </div>
+        </div>
       </footer>
 
       {/* Cart drawer */}
