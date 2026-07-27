@@ -7,16 +7,16 @@ and orders from a private dashboard.
 ## Stack
 
 - Next.js (app router) + Tailwind CSS
-- Supabase (Postgres + RLS + auth) — tables prefixed `pp_`, sharing the same
-  Supabase project as the K&A Laundry site
+- Supabase (Postgres + RLS + auth) — tables prefixed `pp_`, hosted in the
+  "Central services database" project (jdihqzoszqmicgkrkavp)
 
 ## One-time setup
 
-1. **Database** — open the Supabase dashboard → SQL Editor, paste
-   [supabase/2026-07-27-prep-pantry-schema.sql](supabase/2026-07-27-prep-pantry-schema.sql)
-   and Run. Before running, change the setup code (`PREP-SETUP-2026`) to
-   something private. The script creates the tables, security rules and the
-   full starter product list.
+1. **Database** — already applied (2026-07-27) from
+   [supabase/2026-07-27-prep-pantry-schema.sql](supabase/2026-07-27-prep-pantry-schema.sql),
+   with the setup code changed to a private one. To rebuild from scratch, run
+   that file in the Supabase dashboard SQL Editor and change the placeholder
+   setup code (`PREP-SETUP-2026`) first.
 2. **Owner account** — visit `/admin/login` → “First time? Set up the admin
    account”, sign up with the owner's email and the setup code. The first
    account to claim becomes the owner (can edit products and prices); later
