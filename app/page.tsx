@@ -140,7 +140,7 @@ export default function ShopPage() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search rice, tomatoes, milo…"
+              placeholder="Search rice, tomatoes, yam…"
               className="w-full bg-transparent text-sm outline-none placeholder:text-emerald-900/40"
             />
           </div>
