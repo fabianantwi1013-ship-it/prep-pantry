@@ -8,6 +8,7 @@ import { BUSINESS_NAME } from "@/lib/config";
 
 const NAV = [
   { href: "/admin", label: "Orders", icon: "🧾" },
+  { href: "/admin/customers", label: "Customers", icon: "👤" },
   { href: "/admin/products", label: "Products & prices", icon: "🏷️", ownerOnly: true },
 ];
 
