@@ -158,6 +158,13 @@ export default function ShopPage() {
               </span>
             )}
           </button>
+          <a
+            href="/admin"
+            className="flex items-center gap-2 rounded-full border border-emerald-200 px-4 py-2.5 text-sm font-bold text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-50"
+            title="Shop owner sign-in"
+          >
+            👤 <span className="hidden sm:inline">Owner</span>
+          </a>
         </div>
       </header>
 
