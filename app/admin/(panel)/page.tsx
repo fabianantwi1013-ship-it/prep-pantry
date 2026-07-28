@@ -172,6 +172,14 @@ export default function AdminOrdersPage() {
                   {timeAgo(o.created_at)}
                 </span>
                 <b className="text-emerald-950">{cedis(o.total)}</b>
+                <span
+                  className={`text-xs font-bold text-emerald-700 transition-transform ${
+                    open === o.id ? "rotate-180" : ""
+                  }`}
+                  aria-hidden
+                >
+                  ▼
+                </span>
               </button>
 
               {open === o.id && (
