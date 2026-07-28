@@ -32,6 +32,13 @@ and orders from a private dashboard.
    OWNER_ALERT_PHONE=233241028038
    ```
 
+## Hosting
+
+Live on GitHub Pages: https://fabianantwi1013-ship-it.github.io/prep-pantry/
+Every push to `master` redeploys automatically via
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml) (static export —
+`next.config.ts` sets `output: "export"` with a `/prep-pantry` basePath).
+
 ## Develop
 
 ```
@@ -43,7 +50,8 @@ npm run dev
 
 ## How ordering works
 
-Customers don't need an account. The cart lives in the browser; checkout posts
-to `/api/place-order`, which calls the `pp_place_order` RPC — prices are looked
-up server-side, so the client can never set its own prices — then texts the
-owner (if SMS is configured). Payment is on delivery (cash or MoMo).
+Customers don't need an account. The cart lives in the browser; checkout calls
+the `pp_place_order` RPC directly — prices are looked up server-side, so the
+client can never set its own prices. Payment is on delivery (cash or MoMo).
+The owner sees new orders on the dashboard (it refreshes itself); for SMS
+alerts, add a Supabase database webhook or edge function on `pp_orders` inserts.
