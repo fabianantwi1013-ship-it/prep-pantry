@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { supabase, type Product } from "@/lib/supabase";
 import { cedis, waLink } from "@/lib/format";
 import {
@@ -94,27 +95,24 @@ export default function ShopPage() {
     e.preventDefault();
     setPlacing(true);
     setOrderError(null);
-    try {
-      const res = await fetch("/api/place-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          items: lines.map((l) => ({ product_id: l.product.id, quantity: l.qty })),
-        }),
-      });
-      const j = await res.json();
-      if (!res.ok || !j.ok) throw new Error(j.error || "Could not place the order.");
-      setPlaced({ code: j.code, total: j.total });
-      setCart({});
-      setCheckout(false);
-    } catch (err) {
-      setOrderError(
-        err instanceof Error ? err.message : "Could not place the order. Try again."
-      );
-    } finally {
-      setPlacing(false);
+    // The pp_place_order RPC looks prices up server-side, so nothing the
+    // browser sends can change what the customer is charged.
+    const { data, error } = await supabase.rpc("pp_place_order", {
+      p_name: form.name,
+      p_phone: form.phone,
+      p_address: form.address,
+      p_note: form.note,
+      p_items: lines.map((l) => ({ product_id: l.product.id, quantity: l.qty })),
+    });
+    setPlacing(false);
+    if (error) {
+      setOrderError(error.message || "Could not place the order. Try again.");
+      return;
     }
+    const order = data as { code: string; total: number };
+    setPlaced({ code: order.code, total: order.total });
+    setCart({});
+    setCheckout(false);
   }
 
   return (
@@ -158,13 +156,13 @@ export default function ShopPage() {
               </span>
             )}
           </button>
-          <a
+          <Link
             href="/admin"
             className="flex items-center gap-2 rounded-full border border-emerald-200 px-4 py-2.5 text-sm font-bold text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-50"
             title="Shop owner sign-in"
           >
             👤 <span className="hidden sm:inline">Owner</span>
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -362,9 +360,12 @@ export default function ShopPage() {
             <span>
               © {new Date().getFullYear()} {BUSINESS_NAME}
             </span>
-            <a href="/admin" className="underline-offset-2 hover:text-white hover:underline">
+            <Link
+              href="/admin"
+              className="underline-offset-2 hover:text-white hover:underline"
+            >
               Owner login
-            </a>
+            </Link>
           </div>
         </div>
       </footer>
